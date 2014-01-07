@@ -25,27 +25,27 @@ app.get('/', function(request, response) {
 var server = http.createServer(app);
 
 bayeux.attach(server);
-server.listen(3560);
+server.listen(3560, function() {
+    var client = bayeux.getClient();
 
-var client = bayeux.getClient();
+    var rl = readline.createInterface(process.stdin, process.stdout);
+    var lock;
 
-var rl = readline.createInterface(process.stdin, process.stdout);
-var lock;
-
-rl.on('line', function(line) {
-    synchronized(lock, function(callback) {
-        console.log(line);
-        client.publish('/log', {
-            text: line
+    rl.on('line', function(line) {
+        synchronized(lock, function(callback) {
+            console.log(line);
+            client.publish('/log', {
+                text: line
+            });
+            ++stats.messages_sent;
+            callback();
         });
-        ++stats.messages_sent;
-        callback();
     });
-});
 
-rl.on('close', function() {
-    synchronized(lock, function(callback) {
-        console.log('Tearing down.');
-        process.exit(0);
+    rl.on('close', function() {
+        synchronized(lock, function(callback) {
+            console.log('Tearing down.');
+            process.exit(0);
+        });
     });
 });
