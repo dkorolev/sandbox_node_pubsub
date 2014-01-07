@@ -25,7 +25,7 @@ app.get('/', function(request, response) {
 var server = http.createServer(app);
 
 bayeux.attach(server);
-server.listen(3560, function() {
+server.listen(3506, function() {
     var client = bayeux.getClient();
 
     var rl = readline.createInterface(process.stdin, process.stdout);
