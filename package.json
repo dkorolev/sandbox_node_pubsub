@@ -1,0 +1,10 @@
+{
+   "name": "sandbox_node_pubsub",
+   "description": "sandbox_node_pubsub",
+   "private": true,
+   "dependencies": {
+      "underscore": "*",
+      "synchronized": "*",
+      "faye": "*"
+   }
+}
