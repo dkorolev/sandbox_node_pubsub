@@ -10,8 +10,16 @@ var bayeux = new faye.NodeAdapter({
     mount: '/pubsub'
 });
 
+var stats = {
+    start_time_ms: Date.now(),
+    messages_sent: 0,
+};
+
 app.get('/', function(request, response) {
-   response.send('OK');
+    response.send(JSON.stringify({
+        uptime_in_seconds: 1e-3 * (Date.now() - stats.start_time_ms),
+        messages_sent: stats.messages_sent,
+    }));
 });
 
 var server = http.createServer(app);
@@ -30,6 +38,7 @@ rl.on('line', function(line) {
         client.publish('/messages', {
             text: line
         });
+        ++stats.messages_sent;
         callback();
     });
 });
