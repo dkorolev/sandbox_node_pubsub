@@ -25,7 +25,7 @@ app.get('/', function(request, response) {
 var server = http.createServer(app);
 
 bayeux.attach(server);
-server.listen(8000);
+server.listen(3560);
 
 var client = bayeux.getClient();
 
@@ -35,7 +35,7 @@ var lock;
 rl.on('line', function(line) {
     synchronized(lock, function(callback) {
         console.log(line);
-        client.publish('/messages', {
+        client.publish('/log', {
             text: line
         });
         ++stats.messages_sent;

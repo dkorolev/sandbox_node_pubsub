@@ -1,7 +1,7 @@
 var faye = require('faye');
 
-var client = new faye.Client('http://localhost:8000/pubsub');
+var client = new faye.Client('http://localhost:3560/pubsub');
 
-client.subscribe('/messages', function(message) {
+client.subscribe('/log', function(message) {
     console.log('Got a message: ' + JSON.stringify(message));
 });
