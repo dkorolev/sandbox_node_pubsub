@@ -1,21 +1,24 @@
+var express = require('express');
 var http = require('http');
 var faye = require('faye');
 var synchronized = require('synchronized');
 var readline = require('readline');
 
+var app = express();
+
 var bayeux = new faye.NodeAdapter({
     mount: '/pubsub'
 });
 
-var server = http.createServer(function(request, response) {
-    response.writeHead(200, {
-        'Content-Type': 'text/plain'
-    });
-    response.end('Hello, non-Bayeux request.');
+app.get('/', function(request, response) {
+   response.send('OK');
 });
+
+var server = http.createServer(app);
 
 bayeux.attach(server);
 server.listen(8000);
+
 var client = bayeux.getClient();
 
 var rl = readline.createInterface(process.stdin, process.stdout);

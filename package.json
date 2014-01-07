@@ -3,6 +3,7 @@
    "description": "sandbox_node_pubsub",
    "private": true,
    "dependencies": {
+      "express": "*",
       "underscore": "*",
       "synchronized": "*",
       "faye": "*"
